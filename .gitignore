@@ -169,3 +169,33 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# 🛢️ MongoDB
+dump/
+data/db/
+*.lock
+*.pid
+mongod.lock
+mongod.log
+
+# ⚙️ Backend (Django)
+backend/__pycache__/
+backend/db.sqlite3
+backend/media/
+backend/staticfiles/
+backend/.env
+backend/venv/
+backend/migrations/*   # Ignore all migrations except __init__.py
+!backend/migrations/__init__.py
+
+# 🌍 Frontend (React.js)
+frontend/node_modules/
+frontend/.env
+frontend/build/
+frontend/.cache/
+frontend/.DS_Store
+frontend/dist/  # If using Vite
+*.lock
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
