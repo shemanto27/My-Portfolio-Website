@@ -1,14 +1,24 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import Hero from './components/Hero'
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import {createBrowserRouter, RouterProvider} from "react-router-dom"
+
+import Home from './pages/Home'
+import BlogPage from './pages/BlogPage'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Home />
+  },
+  {
+    path: '/blog/:id',
+    element: <BlogPage />
+  },
+]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Navbar></Navbar>
-    <Hero></Hero>
-    <Footer></Footer>
+    <RouterProvider router={router}/>
   </StrictMode>,
 )
