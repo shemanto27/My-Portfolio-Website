@@ -20,24 +20,16 @@ const AddNewBlog = () => {
   // Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("category", category);
     formData.append("body", body);
-    formData.append("image", image);
-
-    const blogData = {
-      id: null,
-      title : formData.title,
-      category : formData.category,
-      body : formData.body,
-      image : formData.image,
-      created_at : null,
-    }
+    formData.append("cover_image", image);
 
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/blogs/", blogData, {
-        headers: { "body-Type": "multipart/form-data" },
+      const res = await axios.post("http://127.0.0.1:8000/api/blogs/", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
       console.log("response:", res.data);
     } catch (error) {
