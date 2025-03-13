@@ -1,13 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function BlogCard({id, title = "Untitled", body = "No content", created_at = "Unknown date" }) {
+function BlogCard({id, cover_image, title = "Untitled", body = "No content", created_at = "Unknown date" }) {
+  console.log("BlogCard:", id, cover_image, title, body, created_at);
   return (
     <>
       <Link to={`/blog/${id}`} className="card bg-base-100 w-96 shadow-sm">
   <figure>
     <img
-      src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+      src={cover_image}
       alt="Shoes" />
   </figure>
   <div className="card-body">

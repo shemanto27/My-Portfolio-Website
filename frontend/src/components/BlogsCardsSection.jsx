@@ -26,7 +26,7 @@ function BlogsCardsSection() {
     <div className='container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-5'>
     {blogs.length > 0 ? (
   blogs.map((blog, index) => {
-    return <BlogCard key={blog.id || index} id={blog.id} title={blog.title} body={blog.body} created_at={blog.created_at} />;
+    return <BlogCard key={blog.id || index} id={blog.id} cover_image={blog.cover_image} title={blog.title} body={blog.body} created_at={blog.created_at} />;
   })
 ) : (
   <div className='text-center'>No blogs found</div>
