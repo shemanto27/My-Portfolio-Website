@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 
 function Admin() {
     const [blogs, setBlogs] = useState([]);
     const API_URL = '/api/blogs/';
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios
@@ -37,6 +40,12 @@ function Admin() {
   <div className="drawer-content flex flex-col items-center justify-center">
     { /* Page content here */}
 
+    <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
+      Open drawer
+    </label>
+
+    <button className='btn btn-success my-5' onClick={() => navigate(`/newblog/`)}>Add New Blog</button>
+
     {
         blogs.length > 0 ? (
             blogs.map((blog, index) =>{
@@ -44,7 +53,7 @@ function Admin() {
                     <p className="mr-3">{blog.title}</p>
                     <p className="mr-3">{blog.created_at}</p>
                     <button className='btn btn-error mr-3' onClick={() => deleteBlog(blog.id)}>Delete</button>
-                    <button className='btn btn-accent'>Update</button>
+                    <button className='btn btn-accent' onClick={() => navigate(`/edit-blog/${blog.id}`)}>Update</button>
                 </div>
             })
         ) : (
@@ -53,9 +62,7 @@ function Admin() {
         )
     }
 
-    <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
-      Open drawer
-    </label>
+    
     </div>
     <div className="drawer-side">
       <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
