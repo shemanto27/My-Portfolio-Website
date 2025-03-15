@@ -9,6 +9,10 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+
+from dotenv import load_dotenv
+load_dotenv()
+
 import os
 from pathlib import Path
 from corsheaders.defaults import default_headers
@@ -26,7 +30,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 SECRET_KEY = 'django-insecure-yk2c60pzc9&l79efjj9)#63ra#9%gs_h68)c1umk$s3f=n63l@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = []
 
@@ -43,12 +47,81 @@ INSTALLED_APPS = [
 ]
 
 EXTERNAL_APPS = [
+    # My apps
     'blogsapp',
+    'accounts',
+
+    # Third party apps
     'rest_framework',
     'corsheaders',
+    'djoser',
+
 ]
 
 INSTALLED_APPS += EXTERNAL_APPS
+
+
+# Settings for REST_FRAMEWORK, SIMPLE_JWT,EMAIL, DJOSER
+from datetime import timedelta
+
+# REST_FRAMEWORK Settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",  # Require login for all endpoints
+    ),
+}
+
+
+# JWT Settings
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": True,
+}
+
+# Email Settings for sending email
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com" 
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv("EMAIL_ADDRESS") 
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD") 
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# DJOSER Settings
+DJOSER = {
+    "PASSWORD_RESET_CONFIRM_URL": "password/reset-password-confirmation/?uid={uid}&token={token}",
+    'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',
+    "ACTIVATION_URL": "activate/{uid}/{token}",
+    "SEND_ACTIVATION_EMAIL": True,
+    "SEND_CONFIRMATION_EMAIL": True,
+    "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
+    "LOGIN_FIELD": "email",
+    "USER_CREATE_PASSWORD_RETYPE": True,
+    "SET_PASSWORD_RETYPE": True,
+    "PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND": True,
+    "TOKEN_MODEL": None,
+
+    "SERIALIZERS": {
+    "user_create": "accounts.serializers.UserCreateSerializer",
+    "user": "accounts.serializers.UserCreateSerializer",
+    'user_delete': 'djoser.serializers.UserDeleteSerializer',
+    # Email templates settings
+    'activation': 'accounts.email.ActivationEmail',
+    'confirmation': 'accounts.email.ConfirmationEmail',
+    'password_reset': 'accounts.email.PasswordResetEmail',
+    'password_changed_confirmation': 'accounts.email.PasswordChangedConfirmationEmail',
+    },
+}
+
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -133,6 +206,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# custom auth model
+AUTH_USER_MODEL = 'accounts.UserModel'
+
+
 
 # CORS
 CORS_ALLOW_ALL_ORIGINS = False
