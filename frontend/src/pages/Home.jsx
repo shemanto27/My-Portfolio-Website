@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import BlogsCardsSection from '../components/BlogsCardsSection';
 
+
 function Home() {
   return (
     <>

@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import BlogPage from './pages/BlogPage'
 import AddNewBlog from './pages/AddNewBlog'
 import Admin from './pages/Admin'
+import UserRegistrationandLoginForm from './pages/UserRegistrationandLoginForm';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: '/admin',
     element: <Admin />
+  },
+  {
+    path: '/register',
+    element: <UserRegistrationandLoginForm />
   },
 ]);
 
