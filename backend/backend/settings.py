@@ -55,6 +55,7 @@ EXTERNAL_APPS = [
     'rest_framework',
     'corsheaders',
     'djoser',
+    'rest_framework_simplejwt.token_blacklist',
 
 ]
 
@@ -99,9 +100,8 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 DJOSER = {
     "PASSWORD_RESET_CONFIRM_URL": "password/reset-password-confirmation/?uid={uid}&token={token}",
     'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',
-    "ACTIVATION_URL": "activate/{uid}/{token}",
-    "SEND_ACTIVATION_EMAIL": True,
-    "SEND_CONFIRMATION_EMAIL": True,
+    "SEND_ACTIVATION_EMAIL": False,
+    "SEND_CONFIRMATION_EMAIL": False,
     "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
     "LOGIN_FIELD": "email",
     "USER_CREATE_PASSWORD_RETYPE": True,
@@ -110,14 +110,12 @@ DJOSER = {
     "TOKEN_MODEL": None,
 
     "SERIALIZERS": {
-    "user_create": "accounts.serializers.UserCreateSerializer",
-    "user": "accounts.serializers.UserCreateSerializer",
-    'user_delete': 'djoser.serializers.UserDeleteSerializer',
-    # Email templates settings
-    'activation': 'accounts.email.ActivationEmail',
-    'confirmation': 'accounts.email.ConfirmationEmail',
-    'password_reset': 'accounts.email.PasswordResetEmail',
-    'password_changed_confirmation': 'accounts.email.PasswordChangedConfirmationEmail',
+        "user_create": "accounts.serializers.UserCreateSerializer",
+        "user": "accounts.serializers.UserCreateSerializer",
+        'user_delete': 'djoser.serializers.UserDeleteSerializer',
+        # Email templates settings
+        'password_reset': 'accounts.email.PasswordResetEmail',
+        'password_changed_confirmation': 'accounts.email.PasswordChangedConfirmationEmail',
     },
 }
 

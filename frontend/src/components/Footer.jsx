@@ -9,10 +9,10 @@ function Footer() {
         <aside>
           <p className='text-white flex items-center justify-center flex-wrap'>
             Copyright © {new Date().getFullYear()} - Build by Shemanto Sharkar with 
-            <div className='flex items-center justify-center'>
+            <span className='flex items-center justify-center'>
             <img src={laptop} alt="laptop" className='w-5 mx-1' /> + 
             <img src={love} alt="love" className='w-5 mx-1'/>
-            </div>
+            </span>
           </p>
         </aside>
       </footer>

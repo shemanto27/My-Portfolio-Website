@@ -31,7 +31,7 @@ const router = createBrowserRouter([
     element: <Admin />
   },
   {
-    path: '/register',
+    path: '/auth/:type',
     element: <UserRegistrationandLoginForm />
   },
 ]);

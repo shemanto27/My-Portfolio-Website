@@ -62,7 +62,6 @@ const AddNewBlog = () => {
         navigate("/admin");
       }
     } catch (error) {
-      console.error("Error creating blog", error.response?.data || error.message);
       alert(JSON.stringify(error.response?.data)); // Show error response in alert
     }
   };

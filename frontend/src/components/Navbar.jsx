@@ -1,7 +1,20 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { FaLinkedin, FaGithub } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom';
+
 
 function Navbar() {
+  const navigate = useNavigate();
+  const [logInStatus, setLogInStatus] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem('token') === null) {
+      setLogInStatus(false);
+    } 
+    else {
+      setLogInStatus(true);
+    };
+  }, [])
   return (
     <>
       <div className="navbar bg-[#18354C] shadow-sm ">
@@ -20,8 +33,8 @@ function Navbar() {
               <li><a>Books</a></li>
               <li><a href="https://www.linkedin.com/in/shemanto"><FaLinkedin className="h-5 w-5" /> LinkedIn</a></li>
               <li><a href="https://github.com/shemanto27"><FaGithub className="h-5 w-5" /> GitHub</a></li>
-              <li className="mb-2"><a className="btn bg-[#E85235] border-[#DD391A] text-white shadow-none">Sign-Up&#10024;</a></li>
-              <li><a className="btn bg-[#fbcf4d] border-0 text-black shadow-none">Login</a></li>
+              <li className="mb-2"><a className="btn bg-[#E85235] border-[#DD391A] text-white shadow-none" onClick={() => navigate('/auth/register')}>Sign-Up&#10024;</a></li>
+              <li><a className="btn bg-[#fbcf4d] border-0 text-black shadow-none" onClick={() => navigate('/auth/login')}>{logInStatus ? 'Login' : 'Logout'}</a></li>
             </ul>
           </div>
           <a className="btn btn-ghost text-xl text-white">Shemanto's Blog</a>
@@ -40,8 +53,8 @@ function Navbar() {
           <a href="https://github.com/shemanto27" target='_blank' className="btn btn-ghost bg-white">
             <FaGithub className="h-5 w-5" />
           </a>
-          <a className="btn bg-[#E85235] border-[#DD391A] text-white shadow-none">Sign-Up&#10024;</a>
-          <a className="btn bg-[#fbcf4d] border-0 text-black shadow-none">Login</a>
+          <a className="btn bg-[#E85235] border-[#DD391A] text-white shadow-none" onClick={() => navigate('/auth/register')}>Sign-Up&#10024;</a>
+          <a className="btn bg-[#fbcf4d] border-0 text-black shadow-none" onClick={() => navigate('/auth/login')}>{logInStatus ? 'Login' : 'Logout'}</a>
         </div>
       </div>
     </>
