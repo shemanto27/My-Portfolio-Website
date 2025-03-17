@@ -29,7 +29,7 @@ function BlogsCardsSection() {
     return <BlogCard key={blog.id || index} id={blog.id} cover_image={blog.cover_image} title={blog.title} body={blog.body} created_at={blog.created_at} />;
   })
 ) : (
-  <div className='text-center'>No blogs found</div>
+  <div className='text-center'><span className="loading loading-spinner text-error"></span></div>
 )}
 
     </div>
