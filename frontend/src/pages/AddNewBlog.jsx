@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import API from '../interceptor/axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddNewBlog = () => {
 
@@ -14,12 +16,10 @@ const AddNewBlog = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
-
   // For Editing existing blog
   useEffect(() => {
     if (id) {
-      axios
-        .get(`${API_URL}${id}/`)
+      API.get(`${API_URL}${id}/`)
         .then((response) => {
           setTitle(response.data.title);
           setCategory(response.data.category);
@@ -51,18 +51,20 @@ const AddNewBlog = () => {
 
     try {
       if (id) {
-        await axios.put(`${API_URL}${id}/`, formData, {
+        await API.put(`${API_URL}${id}/`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
+        toast.success("Blog updated successfully!", { autoClose: 5000 });
         navigate("/admin");
       } else {
-        await axios.post(API_URL, formData, {
+        await API.post(API_URL, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
+        toast.success("Blog created successfully!", { autoClose: 5000 });
         navigate("/admin");
       }
     } catch (error) {
-      alert(JSON.stringify(error.response?.data)); // Show error response in alert
+      toast.error(error.response?.data ? JSON.stringify(error.response.data) : "An error occurred while creating the blog.", { autoClose: 5000 });
     }
   };
 
@@ -113,6 +115,7 @@ const AddNewBlog = () => {
           {id ? "Save Changes" : "Publish Blog"}
         </button>
       </form>
+      <ToastContainer autoClose={5000} />
     </div>
   );
 };

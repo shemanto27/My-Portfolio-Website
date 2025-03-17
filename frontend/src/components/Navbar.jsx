@@ -37,7 +37,7 @@ function Navbar() {
               <li><a className="btn bg-[#fbcf4d] border-0 text-black shadow-none" onClick={() => navigate('/auth/login')}>{logInStatus ? 'Login' : 'Logout'}</a></li>
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl text-white">Shemanto's Blog</a>
+          <a className="btn btn-ghost text-xl text-white" onClick={()=> navigate('/')}>Shemanto's Blog</a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">

@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import Logout from '../components/Logout';
+
 
 
 function Admin() {
@@ -14,7 +16,7 @@ function Admin() {
         .get(API_URL)
         .then(response =>{
             setBlogs(response.data);
-            console.log(blogs);
+            
         })
         .catch(error =>{
             console.error(error);
@@ -24,7 +26,7 @@ function Admin() {
         axios
         .delete(`${API_URL}${id}/`)
         .then(response =>{
-            console.log(response.data);
+            
         })
         .catch(error =>{
             console.error(error);
@@ -45,7 +47,7 @@ function Admin() {
     </label>
 
     <button className='btn btn-success my-5' onClick={() => navigate(`/newblog/`)}>Add New Blog</button>
-
+    <Logout />  
     {
         blogs.length > 0 ? (
             blogs.map((blog, index) =>{
