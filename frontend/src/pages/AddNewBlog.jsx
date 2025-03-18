@@ -4,6 +4,9 @@ import API from '../interceptor/axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import MDEditor from '@uiw/react-md-editor';
+
+
 const AddNewBlog = () => {
 
   const API_URL = "/api/blogs/";
@@ -16,13 +19,17 @@ const AddNewBlog = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
+  // console.log('category:', category);
+  // const categoriesArray = category.split(',').map(cat => cat.trim());
+  // console.log('categoriesArray:', categoriesArray);
+
   // For Editing existing blog
   useEffect(() => {
     if (id) {
       API.get(`${API_URL}${id}/`)
         .then((response) => {
           setTitle(response.data.title);
-          setCategory(response.data.category);
+          setCategory(response.data.categories.join(', '));
           setBody(response.data.body);
           setImagePreview(response.data.cover_image);
         });
@@ -42,12 +49,15 @@ const AddNewBlog = () => {
 
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("category", category);
     formData.append("body", body);
 
     if (image) {
       formData.append("cover_image", image);
     }
+
+    const categoriesArray = category.split(',').map(cat => cat.trim());
+    categoriesArray.forEach(cat => formData.append("categories", cat));
+    console.log(categoriesArray);
 
     try {
       if (id) {
@@ -87,28 +97,19 @@ const AddNewBlog = () => {
           required
         />
 
-        {/* Category Select */}
-        <select
+        {/* Category Input */}
+        <input
+          type="text"
+          placeholder="Categories (comma separated)"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="select select-bordered w-full my-3"
+          className="input input-bordered w-full my-3"
           required
-        >
-          <option value="" disabled>
-            Select a category
-          </option>
-          <option value="React">React</option>
-          <option value="Machine Learning">Machine Learning</option>
-          <option value="Deep Learning">Deep Learning</option>
-        </select>
+        />
 
         {/* Body Input */}
-        <textarea
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-          className="textarea"
-          placeholder="Blog Body"
-        ></textarea>
+        <MDEditor value={body} onChange={setBody} />
+      
 
         {/* Submit Button */}
         <button type="submit" className="btn btn-primary w-full mt-10">
